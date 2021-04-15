@@ -2,20 +2,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.sp.dao.FileDao">
+<mapper namespace="example.FileMapper">
 
     <insert id="addFile" parameterType="com.example.sp.model.ProjectFile">
-        insert into file (course_id, pj_id, user_id, upload_date, size, name, path, description)
-        values (#{course_id}, #{pj_id}, #{user_id}, #{upload_date}, #{size}, #{name}, #{path}, #{description})
+        insert into materials (project_id, user_id, user_type, upload_time, description, size, address)
+        values (#{project_id}, #{user_id}, #{user_type}, #{upload_time}, #{description}, #{size}, #{address})
     </insert>
 
-    <select id="getFileList" parameterType="java.util.Map" resultType="com.example.sp.model.ProjectFile">
-        select * from file where course_id = #{course_id} and pj_id = #{pj_id}
+    <select id="getFiles" parameterType="java.lang.Integer" resultType="com.example.sp.model.ProjectFile">
+        select * from materials
+        where project_id = #{pjID}
     </select>
 
-    <delete id="deleteFile" parameterType="java.lang.Integer">
-        delete from file
-        where file_id = #{file_id}
-    </delete>
+    <select id="getDownloadCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select download_count from materials_download_count
+        where materials_id = #{materials_id}
+    </select>
+
+    <insert id="recordDownload" parameterType="com.example.sp.request.DownloadRequest">
+        insert into download (project_id, materials_id, user_id)
+        values (#{project_id}, #{materials_id}, #{user_id})
+    </insert>
 
 </mapper>

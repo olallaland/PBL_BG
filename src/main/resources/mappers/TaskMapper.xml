@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="example.TaskMapper">
+
+    <select id="getTaskList" parameterType="java.lang.Integer" resultType="com.example.sp.model.SubTask">
+        select * from subTask
+        where project_id = #{pjID}
+    </select>
+
+    <insert id="addTask" parameterType="com.example.sp.model.SubTask">
+        insert into subtask (project_id, content, deadline)
+        values (#{project_id}, #{content}, #{deadline})
+    </insert>
+
+    <update id="stuTakeTask" parameterType="com.example.sp.model.SubTask">
+        update subtask
+        set student_id = #{student_id}, status = "进行中"
+        where task_id = #{task_id} and project_id = #{project_id}
+    </update>
+
+    <select id="getStuTasks" parameterType="com.example.sp.model.SubTask" resultType="com.example.sp.model.SubTask">
+        select * from subTask
+        where project_id = #{project_id} and (student_id = #{student_id} or second_id = #{student_id})
+    </select>
+
+    <insert id="addHelpRequest" parameterType="com.example.sp.model.HelpRequest">
+        insert into help_request (task_id, to_student_id)
+        values (#{task_id}, #{to_student_id})
+    </insert>
+
+    <select id="getHelpRequest" parameterType="java.lang.Integer" resultType="com.example.sp.model.HelpRequest">
+        select * from help_request
+        where task_id = #{task_id}
+    </select>
+
+    <select id="getReceivedRequest" parameterType="java.util.Map" resultType="com.example.sp.model.SubTask">
+        select task_id, project_id, student_id, content, deadline, status, shared, second_id
+        from subtask join help_request using(task_id)
+        where project_id = #{pjID} and to_student_id = #{stuID}
+    </select>
+
+    <update id="submitTask" parameterType="java.lang.Integer">
+        update subtask
+        set status = "已完成"
+        where task_id = #{taskID}
+    </update>
+
+    <update id="updateRequestStatus" parameterType="com.example.sp.model.HelpRequest">
+        update help_request
+        set request_status = #{request_status}
+        where help_request_id = #{help_request_id}
+    </update>
+
+    <update id="updateTaskShared" parameterType="com.example.sp.model.HelpRequest">
+        update subtask
+        set shared = 1, second_id = #{to_student_id}
+        where task_id = #{task_id}
+    </update>
+</mapper>

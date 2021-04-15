@@ -9,61 +9,63 @@ import java.util.Date;
  *  @Time 16:06  
  */
 public class ProjectFile {
-    private int file_id;
-    private String course_id;
-    private String pj_id;
-    private String user_id;
-    private String upload_date;
-    private long size;
-    private String name;
-    private String path;
-    private String description;
+    int materials_id;
+    int project_id;
+    String user_id;
+    String user_type;
+    long upload_time;
+    String description;
+    long size;
+    String address;
+    int download_count;
 
-     public ProjectFile(String course_id, String pj_id, String user_id, String upload_date, long size, String name, String path, String description) {
-        this.course_id = course_id;
-        this.pj_id = pj_id;
+    public ProjectFile(int project_id, String user_id, String user_type, long upload_time, String description, long size, String address) {
+        this.project_id = project_id;
         this.user_id = user_id;
-        this.upload_date = upload_date;
-        this.size = size;
-        this.name = name;
-        this.path = path;
+        this.user_type = user_type;
+        this.upload_time = upload_time;
         this.description = description;
+        this.size = size;
+        this.address = address;
     }
 
-    public ProjectFile(int file_id, String course_id, String pj_id, String user_id, String upload_date, long size, String name, String path, String description) {
-        this.course_id = course_id;
-        this.file_id = file_id;
-        this.pj_id = pj_id;
+    public ProjectFile(int materials_id, int project_id, String user_id, String user_type, long upload_time, String description, long size, String address) {
+        this.materials_id = materials_id;
+        this.project_id = project_id;
         this.user_id = user_id;
-        this.upload_date = upload_date;
-        this.size = size;
-        this.name = name;
-        this.path = path;
+        this.user_type = user_type;
+        this.upload_time = upload_time;
         this.description = description;
+        this.size = size;
+        this.address = address;
     }
 
-    public String getCourse_id() {
-        return course_id;
+    public ProjectFile(int materials_id, int project_id, String user_id, String user_type, long upload_time, String description, long size, String address, int download_count) {
+        this.materials_id = materials_id;
+        this.project_id = project_id;
+        this.user_id = user_id;
+        this.user_type = user_type;
+        this.upload_time = upload_time;
+        this.description = description;
+        this.size = size;
+        this.address = address;
+        this.download_count = download_count;
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
+    public int getMaterials_id() {
+        return materials_id;
     }
 
-    public int getFile_id() {
-        return file_id;
+    public void setMaterials_id(int materials_id) {
+        this.materials_id = materials_id;
     }
 
-    public void setFile_id(int file_id) {
-        this.file_id = file_id;
+    public int getProject_id() {
+        return project_id;
     }
 
-    public String getPj_id() {
-        return pj_id;
-    }
-
-    public void setPj_id(String pj_id) {
-        this.pj_id = pj_id;
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 
     public String getUser_id() {
@@ -74,12 +76,28 @@ public class ProjectFile {
         this.user_id = user_id;
     }
 
-    public String getUpload_date() {
-        return upload_date;
+    public String getUser_type() {
+        return user_type;
     }
 
-    public void setUpload_date(String upload_date) {
-        this.upload_date = upload_date;
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public long getUpload_time() {
+        return upload_time;
+    }
+
+    public void setUpload_time(long upload_time) {
+        this.upload_time = upload_time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getSize() {
@@ -90,27 +108,19 @@ public class ProjectFile {
         this.size = size;
     }
 
-    public String getName() {
-        return name;
+    public String getAddress() {
+        return address;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPath() {
-        return path;
+    public int getDownload_count() {
+        return download_count;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDownload_count(int download_count) {
+        this.download_count = download_count;
     }
 }

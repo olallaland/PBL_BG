@@ -22,8 +22,9 @@
     <mapper resource="mappers/UserMapper.xml"/>
     <mapper resource="mappers/CourseMapper.xml"/>
     <mapper resource="mappers/ProjectMapper.xml"/>
-    <mapper resource="mappers/MissionMapper.xml"/>
+    <mapper resource="mappers/TaskMapper.xml"/>
     <mapper resource="mappers/DiscussionMapper.xml"/>
     <mapper resource="mappers/FileMapper.xml"/>
+    <mapper resource="mappers/TeamMapper.xml"/>
   </mappers>
 </configuration>

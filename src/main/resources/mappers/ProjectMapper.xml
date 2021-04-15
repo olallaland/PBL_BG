@@ -4,65 +4,54 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="example.ProjectMapper">
 
-    <select id="selectCourseProject" parameterType="com.example.sp.request.ProjectRequest" resultType="com.example.sp.model.Project">
-        select * from project natural join project_number
-        where course_id = #{course_id,jdbcType=VARCHAR}
+    <select id="getMyPJ" parameterType="java.lang.String" resultType="com.example.sp.model.ProjectInfo">
+        select * from projectInfo
+        where teacher_id = #{userID, jdbcType=VARCHAR}
     </select>
 
-    <select id="selectAllProject" parameterType="com.example.sp.request.ProjectRequest" resultType="com.example.sp.model.Project">
-        select * from project natural join project_number
-        where course_id = #{course_id,jdbcType=VARCHAR} and pj_id = #{pj_id, jdbcType=VARCHAR}
+    <select id="getStuPJ" parameterType="java.lang.String" resultType="com.example.sp.model.ProjectInfo">
+        select teacher_id, teacher_name, project_id, course_name, project_name, description, key_point_count,
+        member_limit, duration, `status`, start_time
+        from projectinfo join participate using(project_id)
+        where participate.student_id = #{userID, jdbcType=VARCHAR}
     </select>
-<!--    <select id="selectCourseByUsername" parameterType="java.lang.String" resultType="com.example.sp.model.Course">-->
-<!--        select * from course-->
-<!--        where course_id = #{course_id,jdbcType=VARCHAR}-->
-<!--    </select>-->
-    <insert id="insertProject" parameterType="com.example.sp.request.ProjectRequest">
-        insert into project (course_id, pj_id, name, start, end, descs)
-        values (#{course_id}, #{pj_id}, #{name}, #{start}, #{end}, #{describe})
+
+    <select id="searchProject" parameterType="java.lang.String" resultType="com.example.sp.model.ProjectInfo">
+        select * from projectInfo
+        where project_name like #{keyword, jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertProject" parameterType="com.example.sp.request.ProjectAddRequest">
+        insert into project (teacher_id, course_name, project_name, description, key_point_count, member_limit, duration)
+        values (#{teacher_id}, #{course_name}, #{project_name}, #{description}, #{key_point_count}, #{member_limit}, #{duration})
     </insert>
 
-
-
-    <select id="selectProjectById" parameterType="com.example.sp.model.Project" resultType="com.example.sp.model.Project">
-        select * from project natural join project_number
-        where course_id = #{course_id,jdbcType=VARCHAR} and pj_id = #{pj_id, jdbcType=VARCHAR}
+    <select id="getMemberList" parameterType="java.lang.Integer" resultType="com.example.sp.model.Student">
+        select name, student_id
+        from student join participate using(student_id)
+        where project_id = #{pjID}
     </select>
 
-    <update id="updateProject" parameterType="com.example.sp.model.Project" >
+    <select id="getPJDetails" parameterType="java.lang.Integer" resultType="com.example.sp.model.ProjectInfo">
+        select * from projectinfo
+        where project_id = #{pjID}
+    </select>
+
+    <update id="updateProjectStatus" parameterType="com.example.sp.request.UpdateProjectStatusRequest" >
         update project
-        set name = #{name,jdbcType=VARCHAR},start = #{start},end = #{end},descs = #{descs,jdbcType=VARCHAR},captain = #{captain,jdbcType=VARCHAR}
-        where course_id = #{course_id,jdbcType=VARCHAR} and pj_id = #{pj_id,jdbcType=VARCHAR}
+        set status = #{status, jdbcType=VARCHAR}
+        where project_id = #{project_id}
     </update>
 
-
-    <delete id="deleteProjectById" parameterType="com.example.sp.request.ProjectRequest" >
-        delete from project
-        where course_id = #{course_id,jdbcType=VARCHAR} and pj_id = #{pj_id,jdbcType=VARCHAR}
-    </delete>
+    <update id="updateProjectStatusAndTime" parameterType="com.example.sp.request.UpdateProjectStatusRequest" >
+        update project
+        set status = #{status, jdbcType=VARCHAR}, start_time = #{start_time}
+        where project_id = #{project_id}
+    </update>
 
     <!-- student join project -->
     <insert id="joinProject" parameterType="com.example.sp.request.JoinProjectRequest">
-        insert into join_pj (course_id, pj_id, student_id) values (#{course_id}, #{project_id}, #{student_id})
+        insert into participate (student_id, project_id) values (#{student_id}, #{project_id})
     </insert>
-
-    <!-- get project members -->
-    <select id="getProjectMembers" parameterType="com.example.sp.request.ProjectRequest" resultType="com.example.sp.model.Student">
-        select student.student_id as student_id, student.name as name  from student, join_pj
-        where join_pj.course_id = #{course_id} and join_pj.pj_id = #{pj_id} and join_pj.student_id = student.student_id
-    </select>
-
-    <!-- get student score -->
-    <select id="getStudentScore" parameterType="com.example.sp.request.JoinProjectRequest" resultType="com.example.sp.model.StudentScore">
-        select * from join_pj
-        where course_id = #{course_id} and pj_id = #{project_id} and student_id = #{student_id}
-    </select>
-
-    <!-- update student score -->
-    <update id="scoreStudent" parameterType="com.example.sp.model.StudentScore" >
-        update join_pj
-        set mission_score = #{mission_score}, other_score = #{other_score}, scored = #{scored}
-        where course_id = #{course_id} and pj_id = #{project_id} and student_id = #{student_id}
-    </update>
 
 </mapper>

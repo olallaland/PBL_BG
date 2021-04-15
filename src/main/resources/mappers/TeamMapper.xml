@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="example.TeamMapper">
+    <update id="updateRoleTag" parameterType="com.example.sp.request.UpdateTeamMemberRequest">
+        update participate
+        set role_tag = #{role_tag, jdbcType=VARCHAR}
+        where project_id = #{project_id} and student_id = #{student_id}
+    </update>
+
+    <select id="getMemberTag" parameterType="java.lang.Integer" resultType="com.example.sp.model.TeamMember">
+        select * from member_tag
+        where project_id = #{pjID} and role_tag != ""
+    </select>
+
+    <insert id="raiseKeyPoint" parameterType="com.example.sp.request.KeyPointAddRequest">
+        insert into key_points(project_id, student_id, content, time)
+        values (#{project_id}, #{student_id}, #{content}, #{time})
+    </insert>
+
+    <select id="getKeyPoint" parameterType="java.lang.Integer" resultType="com.example.sp.model.KeyPoint">
+        select * from key_point_details
+        where key_point_id = #{key_point_id}
+    </select>
+
+    <update id="updateKeyPoint" parameterType="java.lang.Integer">
+        update key_points
+        set is_key = 1
+        where key_point_id = #{key_point_id}
+    </update>
+
+    <select id="getKeyPointList" parameterType="java.lang.Integer" resultType="com.example.sp.model.KeyPoint">
+        select * from key_points
+        where project_id = #{pjID}
+    </select>
+
+    <select id="getLikedList" parameterType="com.example.sp.request.GetLikedListRequest"
+            resultType="com.example.sp.model.Student">
+        select from_stu_id as student_id from likes
+        where type = #{type} and type_id = #{type_id}
+    </select>
+
+    <insert id="likeAction" parameterType="com.example.sp.request.HandleLikeRequest">
+        insert into likes(type_id, type, from_stu_id, status)
+        values (#{type_id}, #{type}, #{from_stu_id}, #{status})
+    </insert>
+
+    <delete id="cancelLike" parameterType="com.example.sp.request.HandleLikeRequest">
+        delete from likes
+        where type_id = #{type_id} and type = #{type} and from_stu_id = #{from_stu_id}
+    </delete>
+
+    <select id="getMembers" parameterType="java.lang.Integer" resultType="com.example.sp.model.Student">
+        select student_id, name from project_member
+        where project_id = #{pjID}
+    </select>
+</mapper>

@@ -9,110 +9,141 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Discussion {
-
-    String course_id;
-    //课程编码
-
-    String pj_id;
-    //项目编码
-
-
     int discussion_id;
-    //任务编码
-
+    int project_id;
+    String student_id;
+    String student_name;
     String title;
-    //讨论标题
+    String content;
+    String image;
+    long time;
+    boolean liked;
+    int likesCount = 0;
+    List<Student> likeList = new ArrayList<>();
 
-    String question;
-    //问题表述
-
-    String initiator;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'hh:mm")
-    Timestamp start;
-    //讨论发起时间
-
-    List<Discussion_answer> answerList = new ArrayList<>();
-
-    public Discussion(){
-
-    }
-
-    public Discussion(String course_id, String pj_id, int discussion_id, String title, String question, Timestamp start){
-        this.course_id = course_id;
-        this.pj_id = pj_id;
+    public Discussion(int discussion_id, int project_id, String student_id, String title, String content, String image, long time) {
         this.discussion_id = discussion_id;
+        this.project_id = project_id;
+        this.student_id = student_id;
         this.title = title;
-        this.start = start;
-        this.question = question;
+        this.content = content;
+        this.image = image;
+        this.time = time;
     }
 
-    public Discussion(String course_id, String pj_id, int discussion_id, String title, String question, String initiator, Timestamp start) {
-        this.course_id = course_id;
-        this.pj_id = pj_id;
-        this.discussion_id = discussion_id;
+    public Discussion(int project_id, String student_id, String title, String content, long time) {
+        this.project_id = project_id;
+        this.student_id = student_id;
         this.title = title;
-        this.question = question;
-        this.initiator = initiator;
-        this.start = start;
+        this.content = content;
+        this.time = time;
     }
 
-    public void setCourse_id(String course_id){
-        this.course_id = course_id;
-    }
-    public String getCourse_id(){
-        return course_id;
+    public Discussion() {
     }
 
-    public void setPj_id(String pj_id){
-        this.pj_id = pj_id;
-    }
-    public String getPj_id(){
-        return pj_id;
-    }
-
-    public void setDiscussion_id(int discussion_id){
-        this.discussion_id = discussion_id;
-    }
-    public int getDiscussion_id(){
-        return discussion_id;
-    }
-
-    public void setTitle(String title){
+    public Discussion(int project_id, String student_id, String title, String content, String image, long time) {
+        this.project_id = project_id;
+        this.student_id = student_id;
         this.title = title;
+        this.content = content;
+        this.image = image;
+        this.time = time;
     }
-    public String getTitle(){
+
+    public Discussion(int project_id, String student_id, String student_name, String title, String content) {
+        this.project_id = project_id;
+        this.student_id = student_id;
+        this.student_name = student_name;
+        this.title = title;
+        this.content = content;
+    }
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
+    }
+
+    public String getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(String student_id) {
+        this.student_id = student_id;
+    }
+
+    public String getTitle() {
         return title;
     }
 
-    public void setStart(Timestamp start){
-        this.start = start;
-    }
-    public Timestamp getStart(){
-        return start;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setQuestion(String question){
-        this.question = question;
-    }
-    public String getQuestion(){
-        return question;
+    public String getContent() {
+        return content;
     }
 
-    public String getInitiator() {
-        return initiator;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public void setInitiator(String initiator) {
-        this.initiator = initiator;
+    public String getImage() {
+        return image;
     }
 
-    public List<Discussion_answer> getAnswerList() {
-        return answerList;
+    public void setImage(String image) {
+        this.image = image;
     }
 
-    public void setAnswerList(List<Discussion_answer> answerList) {
-        this.answerList = answerList;
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public String getStudent_name() {
+        return student_name;
+    }
+
+    public void setStudent_name(String student_name) {
+        this.student_name = student_name;
+    }
+
+    public int getDiscussion_id() {
+        return discussion_id;
+    }
+
+    public void setDiscussion_id(int discussion_id) {
+        this.discussion_id = discussion_id;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public List<Student> getLikeList() {
+        return likeList;
+    }
+
+    public void setLikeList(List<Student> likeList) {
+        this.likeList = likeList;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }

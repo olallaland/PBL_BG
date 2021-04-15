@@ -4,29 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="example.DiscussionMapper">
 
-
-    <select id="selectDiscussion" parameterType="com.example.sp.request.ProjectRequest" resultType="com.example.sp.model.Discussion">
+    <select id="getDiscussionList" parameterType="java.lang.Integer" resultType="com.example.sp.model.Discussion">
         select * from discussion
-        where course_id = #{course_id,jdbcType=VARCHAR} and pj_id = #{pj_id, jdbcType=VARCHAR}
+        where project_id = #{pjID}
     </select>
 
-
-    <insert id="insertDiscussion" parameterType="com.example.sp.model.Discussion">
-        insert into discussion (course_id, pj_id, initiator, title, question, start)
-        values (#{course_id}, #{pj_id}, #{initiator}, #{title}, #{question}, #{start})
+    <insert id="addDiscussion" parameterType="com.example.sp.model.Discussion">
+        insert into discussion (project_id, student_id, title, content, time)
+        values (#{project_id}, #{student_id}, #{title}, #{content}, #{time})
     </insert>
 
-
-
-    <select id="selectDiscussion_answer" parameterType="com.example.sp.model.Discussion_answer" resultType="com.example.sp.model.Discussion_answer">
-        select * from discussion_answer
-        where discussion_id = #{discussion_id,jdbcType=INTEGER}
+    <select id="getReplyList" parameterType="java.lang.Integer" resultType="com.example.sp.model.Reply">
+        select * from reply
+        where discussion_id = #{discussionID}
     </select>
 
-    <insert id="insertDiscussion_answer" parameterType="com.example.sp.model.Discussion_answer">
-        insert into discussion_answer (user_id, discussion_id, answer_time, content)
-        values (#{user_id}, #{discussion_id}, #{answer_time}, #{content})
+    <insert id="addReply" parameterType="com.example.sp.model.Reply">
+        insert into reply (project_id, discussion_id, student_id, content, reply_time)
+        values (#{project_id}, #{discussion_id}, #{student_id}, #{content}, #{reply_time})
     </insert>
-
-
 </mapper>

@@ -7,20 +7,17 @@ public class Teacher {
     //密码
     String name;
     //学生名字
-    String gender;
-    //性别
-    String picture;
-    //头像，暂时用String类型的url表示
-
     public Teacher(){
-
     }
 
-    public Teacher(String teacher_id, String password, String name, String gender, String picture){
+    public Teacher(String teacher_id, String name) {
         this.teacher_id = teacher_id;
         this.name = name;
-        this.gender = gender;
-        this.picture = picture;
+    }
+
+    public Teacher(String teacher_id, String password, String name){
+        this.teacher_id = teacher_id;
+        this.name = name;
         this.password = password;
     }
 
@@ -36,20 +33,6 @@ public class Teacher {
     }
     public String getName(){
         return name;
-    }
-
-    public void setGender(String gender){
-        this.gender = gender;
-    }
-    public String getGender(){
-        return gender;
-    }
-
-    public void setPicture(String picture){
-        this.picture = picture;
-    }
-    public String getPicture(){
-        return picture;
     }
 
     public void setPassword(String password){
